@@ -8,12 +8,16 @@
     <link rel="stylesheet" href="{% static 'css/hangarin.css' %}">
 </head>
 <body>
-    {% include 'includes/navbar.html' %}
-    <div class="layout">
+    <div class="app-shell">
         {% include 'includes/sidebar.html' %}
-        <main class="main-content">
-            {% block content %}{% endblock %}
-        </main>
+
+        <div class="app-main">
+            {% include 'includes/navbar.html' %}
+
+            <div class="app-content">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
     </div>
 </body>
 </html>

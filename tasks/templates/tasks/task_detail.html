@@ -4,42 +4,79 @@
 
 {% block content %}
 <div class="page-header">
-    <h1>Task Detail</h1>
-    <p>View task information, subtasks, and notes.</p>
+    <div>
+        <h1>Task Detail</h1>
+        <p>See the selected task, its subtasks, and notes.</p>
+    </div>
 </div>
 
-<div class="card">
-    <h2>{{ task.title }}</h2>
-    <p><strong>Description:</strong> {{ task.description }}</p>
-    <p><strong>Status:</strong> {{ task.status }}</p>
-    <p><strong>Priority:</strong> {{ task.priority }}</p>
-    <p><strong>Category:</strong> {{ task.category }}</p>
-    <p><strong>Deadline:</strong> {{ task.deadline }}</p>
-</div>
+<div class="detail-grid">
+    <div class="panel-card">
+        <div class="panel-head">
+            <h2>{{ task.title }}</h2>
+            <p>Main task information</p>
+        </div>
 
-<div class="card">
-    <h2>Subtasks</h2>
-    {% if task.subtasks.all %}
-        <ul>
-            {% for subtask in task.subtasks.all %}
-                <li>{{ subtask.title }} — {{ subtask.status }}</li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No subtasks available.</p>
-    {% endif %}
-</div>
+        <div class="detail-list">
+            <div class="detail-row">
+                <span>Description</span>
+                <strong>{{ task.description }}</strong>
+            </div>
+            <div class="detail-row">
+                <span>Status</span>
+                <strong>{{ task.status }}</strong>
+            </div>
+            <div class="detail-row">
+                <span>Priority</span>
+                <strong>{{ task.priority }}</strong>
+            </div>
+            <div class="detail-row">
+                <span>Category</span>
+                <strong>{{ task.category }}</strong>
+            </div>
+            <div class="detail-row">
+                <span>Deadline</span>
+                <strong>{{ task.deadline|date:"M d, Y h:i A" }}</strong>
+            </div>
+        </div>
+    </div>
 
-<div class="card">
-    <h2>Notes</h2>
-    {% if task.notes.all %}
-        <ul>
-            {% for note in task.notes.all %}
-                <li>{{ note.content }}</li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No notes available.</p>
-    {% endif %}
+    <div class="panel-card">
+        <div class="panel-head">
+            <h2>Subtasks</h2>
+            <p>Smaller parts of the main task</p>
+        </div>
+
+        {% if task.subtasks.all %}
+            <ul class="simple-list">
+                {% for subtask in task.subtasks.all %}
+                    <li>{{ subtask.title }} <span>({{ subtask.status }})</span></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No subtasks available.</p>
+        {% endif %}
+    </div>
+
+    <div class="panel-card">
+        <div class="panel-head">
+            <h2>Notes</h2>
+            <p>Extra reminders and details</p>
+        </div>
+
+        {% if task.notes.all %}
+            <ul class="simple-list">
+                {% for note in task.notes.all %}
+                    <li>{{ note.content }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No notes available.</p>
+        {% endif %}
+    </div>
+    <div class="card">
+    <a href="{% url 'task_update' task.pk %}" class="btn-primary">Edit</a>
+    <a href="{% url 'task_delete' task.pk %}" class="btn-danger">Delete</a>
+</div>
 </div>
 {% endblock %}

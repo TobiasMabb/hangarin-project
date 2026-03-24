@@ -4,56 +4,28 @@
 
 {% block content %}
 <div class="page-header">
-    <h1>Dashboard</h1>
-    <p>Task and To-Do Manager Overview</p>
-</div>
-
-<div class="card-grid">
-    <div class="card stat-card">
-        <h3>Total Tasks</h3>
-        <p>{{ task_count }}</p>
-    </div>
-    <div class="card stat-card">
-        <h3>Pending</h3>
-        <p>{{ pending_count }}</p>
-    </div>
-    <div class="card stat-card">
-        <h3>In Progress</h3>
-        <p>{{ in_progress_count }}</p>
-    </div>
-    <div class="card stat-card">
-        <h3>Completed</h3>
-        <p>{{ completed_count }}</p>
+    <div>
+        <h1>Dashboard</h1>
+        <p>Track priorities, deadlines, and progress in one place.</p>
     </div>
 </div>
 
-<div class="card">
-    <h2>Recent Tasks</h2>
-    {% if recent_tasks %}
-        <table class="custom-table">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Status</th>
-                    <th>Priority</th>
-                    <th>Category</th>
-                    <th>Deadline</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for task in recent_tasks %}
-                <tr>
-                    <td><a href="{% url 'task_detail' task.pk %}">{{ task.title }}</a></td>
-                    <td>{{ task.status }}</td>
-                    <td>{{ task.priority }}</td>
-                    <td>{{ task.category }}</td>
-                    <td>{{ task.deadline }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <p>No tasks yet.</p>
-    {% endif %}
+<div class="stats-grid">
+    <div class="info-card">
+        <span class="info-label">Total Tasks</span>
+        <h3>{{ task_count }}</h3>
+    </div>
+    <div class="info-card">
+        <span class="info-label">Pending</span>
+        <h3>{{ pending_count }}</h3>
+    </div>
+    <div class="info-card">
+        <span class="info-label">In Progress</span>
+        <h3>{{ in_progress_count }}</h3>
+    </div>
+    <div class="info-card">
+        <span class="info-label">Completed</span>
+        <h3>{{ completed_count }}</h3>
+    </div>
 </div>
 {% endblock %}
