@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard | Hangarin{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Dashboard</h1>
+    <p>Task and To-Do Manager Overview</p>
+</div>
+
+<div class="card-grid">
+    <div class="card stat-card">
+        <h3>Total Tasks</h3>
+        <p>{{ task_count }}</p>
+    </div>
+    <div class="card stat-card">
+        <h3>Pending</h3>
+        <p>{{ pending_count }}</p>
+    </div>
+    <div class="card stat-card">
+        <h3>In Progress</h3>
+        <p>{{ in_progress_count }}</p>
+    </div>
+    <div class="card stat-card">
+        <h3>Completed</h3>
+        <p>{{ completed_count }}</p>
+    </div>
+</div>
+
+<div class="card">
+    <h2>Recent Tasks</h2>
+    {% if recent_tasks %}
+        <table class="custom-table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Priority</th>
+                    <th>Category</th>
+                    <th>Deadline</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in recent_tasks %}
+                <tr>
+                    <td><a href="{% url 'task_detail' task.pk %}">{{ task.title }}</a></td>
+                    <td>{{ task.status }}</td>
+                    <td>{{ task.priority }}</td>
+                    <td>{{ task.category }}</td>
+                    <td>{{ task.deadline }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No tasks yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

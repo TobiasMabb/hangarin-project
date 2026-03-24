@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Task Detail | Hangarin{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Task Detail</h1>
+    <p>View task information, subtasks, and notes.</p>
+</div>
+
+<div class="card">
+    <h2>{{ task.title }}</h2>
+    <p><strong>Description:</strong> {{ task.description }}</p>
+    <p><strong>Status:</strong> {{ task.status }}</p>
+    <p><strong>Priority:</strong> {{ task.priority }}</p>
+    <p><strong>Category:</strong> {{ task.category }}</p>
+    <p><strong>Deadline:</strong> {{ task.deadline }}</p>
+</div>
+
+<div class="card">
+    <h2>Subtasks</h2>
+    {% if task.subtasks.all %}
+        <ul>
+            {% for subtask in task.subtasks.all %}
+                <li>{{ subtask.title }} — {{ subtask.status }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No subtasks available.</p>
+    {% endif %}
+</div>
+
+<div class="card">
+    <h2>Notes</h2>
+    {% if task.notes.all %}
+        <ul>
+            {% for note in task.notes.all %}
+                <li>{{ note.content }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No notes available.</p>
+    {% endif %}
+</div>
+{% endblock %}
