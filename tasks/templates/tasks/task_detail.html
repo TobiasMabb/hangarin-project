@@ -8,12 +8,10 @@
         <h1>Task Detail</h1>
         <p>See the selected task, subtasks, and notes.</p>
     </div>
-    {% if request.user.is_staff %}
     <div class="action-group">
         <a href="{% url 'task_update' task.pk %}" class="btn-primary">Edit</a>
         <a href="{% url 'task_delete' task.pk %}" class="btn-danger">Delete</a>
     </div>
-    {% endif %}
 </div>
 
 <div class="detail-grid">

@@ -1,13 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from .models import Task
 from .forms import TaskForm, SubTaskForm, NoteForm
-
-
-def staff_required(view_func):
-    return user_passes_test(lambda u: u.is_authenticated and u.is_staff)(view_func)
 
 
 def register_view(request):
@@ -72,7 +68,7 @@ def task_detail(request, pk):
     })
 
 
-@staff_required
+@login_required
 def task_create(request):
     form = TaskForm(request.POST or None)
 
@@ -86,7 +82,7 @@ def task_create(request):
     })
 
 
-@staff_required
+@login_required
 def task_update(request, pk):
     task = get_object_or_404(Task, pk=pk)
     form = TaskForm(request.POST or None, instance=task)
@@ -101,7 +97,7 @@ def task_update(request, pk):
     })
 
 
-@staff_required
+@login_required
 def task_delete(request, pk):
     task = get_object_or_404(Task, pk=pk)
 

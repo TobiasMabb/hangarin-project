@@ -8,9 +8,7 @@
         <h1>Tasks</h1>
         <p>View, search, and manage your tasks.</p>
     </div>
-    {% if request.user.is_staff %}
-        <a href="{% url 'task_create' %}" class="btn-primary">+ Add Task</a>
-    {% endif %}
+    <a href="{% url 'task_create' %}" class="btn-primary">+ Add Task</a>
 </div>
 
 <div class="panel-card">
@@ -37,9 +35,7 @@
                     <th>Priority</th>
                     <th>Category</th>
                     <th>Deadline</th>
-                    {% if request.user.is_staff %}
-                        <th>Actions</th>
-                    {% endif %}
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -50,12 +46,10 @@
                     <td>{{ task.priority }}</td>
                     <td>{{ task.category }}</td>
                     <td>{{ task.deadline|date:"M d, Y h:i A" }}</td>
-                    {% if request.user.is_staff %}
                     <td>
                         <a href="{% url 'task_update' task.pk %}">Edit</a> |
                         <a href="{% url 'task_delete' task.pk %}">Delete</a>
                     </td>
-                    {% endif %}
                 </tr>
                 {% endfor %}
             </tbody>
