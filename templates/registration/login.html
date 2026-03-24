@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Hangarin</title>
+    <link rel="stylesheet" href="{% static 'css/hangarin.css' %}">
+</head>
+<body class="auth-page">
+    <div class="auth-card">
+        <h1>Hangarin</h1>
+        <p>Login to continue</p>
+
+        <form method="post" class="custom-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn-primary">Login</button>
+        </form>
+
+        <p class="auth-link">
+            No account yet? <a href="{% url 'register' %}">Register here</a>
+        </p>
+    </div>
+</body>
+</html>

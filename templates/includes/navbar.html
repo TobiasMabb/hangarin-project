@@ -5,6 +5,12 @@
     </div>
 
     <div class="topbar-right">
-        <span class="topbar-badge">Organize your daily goals</span>
+        {% if request.user.is_authenticated %}
+            <span class="topbar-badge">{{ request.user.username }}</span>
+            <form method="post" action="{% url 'logout' %}" class="logout-form">
+                {% csrf_token %}
+                <button type="submit" class="btn-danger btn-small">Logout</button>
+            </form>
+        {% endif %}
     </div>
 </header>
