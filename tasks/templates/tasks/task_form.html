@@ -1,15 +1,18 @@
 {% extends 'base.html' %}
 
+{% block title %}{{ page_title }} | Hangarin{% endblock %}
+
 {% block content %}
 <div class="page-header">
-    <h1>Task Form</h1>
+    <h1>{{ page_title }}</h1>
+    <p>Fill in the task information below.</p>
 </div>
 
-<div class="panel-card">
-    <form method="post">
+<div class="panel-card form-panel">
+    <form method="post" class="custom-form">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="btn-primary">Save</button>
+        <button type="submit" class="btn-primary">Save Task</button>
     </form>
 </div>
 {% endblock %}

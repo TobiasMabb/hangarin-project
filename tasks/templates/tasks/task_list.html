@@ -1,34 +1,62 @@
 {% extends 'base.html' %}
 
+{% block title %}Tasks | Hangarin{% endblock %}
+
 {% block content %}
-<div class="page-header">
-    <h1>Tasks</h1>
+<div class="page-header page-header-flex">
+    <div>
+        <h1>Tasks</h1>
+        <p>View, search, and manage your tasks.</p>
+    </div>
     <a href="{% url 'task_create' %}" class="btn-primary">+ Add Task</a>
 </div>
 
 <div class="panel-card">
-    <table class="custom-table">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Status</th>
-                <th>Priority</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for task in tasks %}
-            <tr>
-                <td><a href="{% url 'task_detail' task.pk %}">{{ task.title }}</a></td>
-                <td>{{ task.status }}</td>
-                <td>{{ task.priority }}</td>
-                <td>
-                    <a href="{% url 'task_update' task.pk %}">Edit</a> |
-                    <a href="{% url 'task_delete' task.pk %}">Delete</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <form method="get" class="filter-bar">
+        <input type="text" name="q" placeholder="Search by title..." value="{{ query }}">
+        <select name="status">
+            <option value="">All Status</option>
+            <option value="Pending" {% if status == 'Pending' %}selected{% endif %}>Pending</option>
+            <option value="In Progress" {% if status == 'In Progress' %}selected{% endif %}>In Progress</option>
+            <option value="Completed" {% if status == 'Completed' %}selected{% endif %}>Completed</option>
+        </select>
+        <button type="submit" class="btn-primary">Filter</button>
+    </form>
+</div>
+
+<div class="panel-card">
+    {% if tasks %}
+    <div class="table-wrap">
+        <table class="custom-table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Priority</th>
+                    <th>Category</th>
+                    <th>Deadline</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in tasks %}
+                <tr>
+                    <td><a href="{% url 'task_detail' task.pk %}">{{ task.title }}</a></td>
+                    <td>{{ task.status }}</td>
+                    <td>{{ task.priority }}</td>
+                    <td>{{ task.category }}</td>
+                    <td>{{ task.deadline|date:"M d, Y h:i A" }}</td>
+                    <td>
+                        <a href="{% url 'task_update' task.pk %}">Edit</a> |
+                        <a href="{% url 'task_delete' task.pk %}">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p>No tasks available.</p>
+    {% endif %}
 </div>
 {% endblock %}

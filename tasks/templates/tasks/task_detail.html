@@ -3,10 +3,14 @@
 {% block title %}Task Detail | Hangarin{% endblock %}
 
 {% block content %}
-<div class="page-header">
+<div class="page-header page-header-flex">
     <div>
         <h1>Task Detail</h1>
-        <p>See the selected task, its subtasks, and notes.</p>
+        <p>See the selected task, subtasks, and notes.</p>
+    </div>
+    <div class="action-group">
+        <a href="{% url 'task_update' task.pk %}" class="btn-primary">Edit</a>
+        <a href="{% url 'task_delete' task.pk %}" class="btn-danger">Delete</a>
     </div>
 </div>
 
@@ -44,7 +48,7 @@
     <div class="panel-card">
         <div class="panel-head">
             <h2>Subtasks</h2>
-            <p>Smaller parts of the main task</p>
+            <p>Break the task into smaller parts</p>
         </div>
 
         {% if task.subtasks.all %}
@@ -56,6 +60,14 @@
         {% else %}
             <p>No subtasks available.</p>
         {% endif %}
+
+        <hr class="section-divider">
+
+        <form method="post" action="{% url 'subtask_create' task.pk %}" class="custom-form">
+            {% csrf_token %}
+            {{ subtask_form.as_p }}
+            <button type="submit" class="btn-primary">Add Subtask</button>
+        </form>
     </div>
 
     <div class="panel-card">
@@ -73,10 +85,14 @@
         {% else %}
             <p>No notes available.</p>
         {% endif %}
+
+        <hr class="section-divider">
+
+        <form method="post" action="{% url 'note_create' task.pk %}" class="custom-form">
+            {% csrf_token %}
+            {{ note_form.as_p }}
+            <button type="submit" class="btn-primary">Add Note</button>
+        </form>
     </div>
-    <div class="card">
-    <a href="{% url 'task_update' task.pk %}" class="btn-primary">Edit</a>
-    <a href="{% url 'task_delete' task.pk %}" class="btn-danger">Delete</a>
-</div>
 </div>
 {% endblock %}
