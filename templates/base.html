@@ -1,10 +1,14 @@
 {% load static %}
+{% load pwa %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Hangarin{% endblock %}</title>
+
+    {% progressive_web_app_meta %}
+
     <link rel="stylesheet" href="{% static 'css/hangarin.css' %}">
 </head>
 <body>
